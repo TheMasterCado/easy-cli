@@ -1,0 +1,9 @@
+name: easy-cli
+version: 0.1.0
+description: A simple shard that provides a structure, a parser and some helpers for building CLI utilities.
+authors:
+  - TheMasterCado
+
+crystal: 0.27.0
+
+license: MIT
