@@ -9,7 +9,6 @@ end
 class PDU < Easy_CLI::CLI
   def initialize
     super
-    program_name "pdu"
     program_desc "pdu v2 alo"
   end
 end
@@ -34,7 +33,7 @@ class Com2 < Easy_CLI::CLI::Command
     name("com2")
     desc "do stuff2"
 
-    option "test2", :boolean, "-t", "--test2", desc: "allo"
+    option "test2", :boolean, "-t2", "--test2", desc: "allo"
   end
 
   def call(options)

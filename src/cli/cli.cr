@@ -4,7 +4,7 @@ require "../parser"
 
 module Easy_CLI
   abstract class CLI
-    @registry : Command
+    @registry : Registry
 
     def initialize
       @registry = Registry.new
@@ -31,14 +31,18 @@ module Easy_CLI
     end
 
     macro program_name(n)
-            @registry.call_name = {{n}}
-        end
+      @registry.call_name = {{n}}
+    end
 
     macro program_desc(d)
-            @registry.description = {{d}}
-        end
+      @registry.description = {{d}}
+    end
 
     private class Registry < Command
+
+      property call_name = File.basename(PROGRAM_NAME)
+      property description = ""
+
       def call(options)
         raise CommandException.new("Registry called directly.")
       end

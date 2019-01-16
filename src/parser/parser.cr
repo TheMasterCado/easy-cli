@@ -33,16 +33,16 @@ module Easy_CLI
 
       def self.parse_options(args, command)
         parsed_options = command.options_defaults
-        cur_options = [] of String
-        args.each_with_index do |arg, idx|
-          if arg.starts_with?('-')
-            cur_options = args[idx..-1]
-            break
-          end
-        end
+        cur_options = args
+        # args.each_with_index do |arg, idx|
+        #   if arg.starts_with?('-')
+        #     cur_options = args[idx..-1]
+        #     break
+        #   end
+        # end
         option_parser = OptionParser.new do |parser|
           parser.banner = command.usage(with_options: true)
-          command.options.each do |opt|
+          command.all_options.each do |opt|
             case opt.type
             when :boolean
               parser.on("#{opt.short_flag}", "#{opt.long_flag}", opt.desc) { parsed_options[opt.name] = true }
@@ -59,12 +59,15 @@ module Easy_CLI
                 end
               end
             when :array
-              parser.on("#{opt.short_flag} #{opt.name.upcase},...", "--to=#{opt.name.upcase},...", opt.desc) { |items| parsed_options[opt.name] = items.split(',') }
+              parser.on("#{opt.short_flag} #{opt.name.upcase},...", "#{opt.long_flag}=#{opt.name.upcase},...", opt.desc) { |items| parsed_options[opt.name] = items.split(',') }
             else
               raise Command::Option::InvalidOptionType.new("'#(opt.type)' is not a valid type for an option.")
             end
           end
-          parser.on("-h", "--help", "Show this help") { puts parser }
+          parser.on("-h", "--help", "Show this help") do 
+            puts parser
+            exit(0)
+          end
           parser.invalid_option do |flag|
             STDERR.puts "ERROR: '#{flag}' is not a valid option."
             STDERR.puts parser
