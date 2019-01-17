@@ -8,14 +8,12 @@ end
 
 class PDU < Easy_CLI::CLI
   def initialize
-    super
-    program_desc "pdu v2 alo"
+    desc "pdu v2 alo"
   end
 end
 
-class Com < Easy_CLI::CLI::Command
+class Com < Easy_CLI::Command
   def initialize
-    super
     name("com")
     desc "do stuff"
 
@@ -27,9 +25,8 @@ class Com < Easy_CLI::CLI::Command
   end
 end
 
-class Com2 < Easy_CLI::CLI::Command
+class Com2 < Easy_CLI::Command
   def initialize
-    super
     name("com2")
     desc "do stuff2"
 
@@ -46,4 +43,4 @@ pdu = PDU.new
 pdu.register(Com.new) do |com|
   com.register(Com2.new)
 end
-pdu.call(ARGV)
+pdu.run(ARGV)
