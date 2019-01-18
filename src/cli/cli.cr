@@ -4,25 +4,22 @@ require "../parser"
 
 module Easy_CLI
   abstract class CLI < Command
-
     getter call_name = File.basename(PROGRAM_NAME)
 
     abstract def initialize
 
-    def call(options)
-      raise Exception.new("No root command defined.")
+    def call(args)
+      raise Exception.new("You can't invoke 'call' on a CLI, invoke 'run'.")
     end
 
     def run(args)
-      p args.class
       command = Parser.parse_command(args, self)
       if command.is_a?(CLI) || !command.commands.empty?
-        STDERR.puts command.usage
+        puts command.usage
         exit(1)
-      else
-        options = Parser.parse_options(args, command)
-        command.call(options)
       end
+      options = Parser.parse_options(args, command)
+      command.call(options)
     end
   end
 end
