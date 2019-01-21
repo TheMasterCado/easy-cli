@@ -8,7 +8,7 @@ Easy CLI is a small shard that provides a structure for your CLI utilities with 
 ```yaml
 dependencies:
   easy-cli:
-    github: your-github-user/easy-cli
+    github: themastercado/easy-cli
 ```
 2. Run `shards install`
 
@@ -24,7 +24,7 @@ Create a branch and do your stuff.
 
 ## Contributing
 
-1. Fork it (<https://github.com/your-github-user/easy-cli/fork>)
+1. Fork it (<https://github.com/themastercado/easy-cli/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

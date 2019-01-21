@@ -4,8 +4,10 @@ require "../setting"
 module Easy_CLI
     abstract class Config
 
-        @settings = [] of Setting
-        @file: String = ""
+        # How the fuck to I do this
+        getter settings = [] of Setting
+        getter file: String = ""
+        getter configuration = [] of Setting
 
         abstract def initialize
         
@@ -18,7 +20,9 @@ module Easy_CLI
         end
 
         def load_file
-            
+            if File.exists?(@file)
+                YAML.parse(File.read(@file))
+            end
         end
 
         def validate

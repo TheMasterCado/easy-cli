@@ -14,9 +14,9 @@ module Easy_CLI
     abstract def call(args)
 
     def options_defaults
-      option_defaults = {} of String => String | Bool | Int32 | Array(String) | Nil
-      all_options.map { |option| option_defaults[option.name] = option.default }
-      option_defaults
+      defaults = {} of String => String | Bool | Int32 | Array(String) | Nil
+      all_options.map { |option| defaults[option.name] = option.default }
+      defaults
     end
 
     def all_options
@@ -92,7 +92,7 @@ module Easy_CLI
     def usage(with_options = false)
       message = "Usage: #{self.absolute_call_name}"
       message += " COMMAND" unless @commands.empty?
-      all_arguments.each do |arg|
+      self.all_arguments.each do |arg|
         message += " #{arg.underscore.upcase}"
       end
       message += " [options]" if with_options

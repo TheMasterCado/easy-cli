@@ -2,6 +2,7 @@ require "./cli"
 require "./command"
 require "./option"
 require "./config"
+require "./logger"
 
 module Easy_CLI
   VERSION = "0.1.0"
