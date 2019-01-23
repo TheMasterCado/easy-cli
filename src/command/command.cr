@@ -112,7 +112,7 @@ module Easy_CLI
       if self.has_option_or_argument?(name)
         raise OptionNameNotUnique.new("An Option or Argument named '#{name}' is already defined.")
       else
-        @options << Option.new(name, type, short_flag, long_flag, default, required, desc)
+        @options << name: Option.new(name, type, short_flag, long_flag, default, required, desc)
       end
     end
 

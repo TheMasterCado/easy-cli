@@ -4,10 +4,9 @@ require "../setting"
 module Easy_CLI
     abstract class Config
 
-        # How the fuck to I do this
         getter settings = [] of Setting
-        getter file: String = ""
-        getter configuration = [] of Setting
+        getter file = ""
+        getter configuration = {} of String => Nil | Int32 | String | Array(String)
 
         abstract def initialize
         
@@ -15,8 +14,25 @@ module Easy_CLI
             @file = path
         end
 
-        def setting(name, type, default = nil, required = false)
-            @settings << Setting.new(name, type, default, required)
+        def has_setting?(setting)
+            @settings.each do |s|
+                return true if s.full_name == setting
+            end
+        end
+
+        def get_setting(setting)
+            @settings.each do |s|
+                return s if s.full_name == setting
+            end
+            return @settings.first
+        end
+
+        def setting(full_name, type, default = nil)
+            if self.has_setting?
+                SettingNameNotUnique
+            else
+                @settings << Setting.new(full_name, type, default)
+            end
         end
 
         def load_file
@@ -27,6 +43,9 @@ module Easy_CLI
 
         def validate
 
+        end
+
+        class SettingNameNotUnique < Exception
         end
 
     end
