@@ -29,7 +29,7 @@ module Easy_CLI
 
         def setting(full_name, type, default = nil)
             if self.has_setting?
-                SettingNameNotUnique
+                raise SettingNameNotUnique.new("A Setting named '#{full_name}' is already defined.")
             else
                 @settings << Setting.new(full_name, type, default)
             end
