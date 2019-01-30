@@ -3,10 +3,11 @@ require "../channel"
 module Easy_CLI
     class Logger
 
-        getter verbosity = 3
+        getter verbosity = 5
         getter channels = [
             Easy_CLI::Channel.new(:default_out, :stdout, 3, false),
-            Easy_CLI::Channel.new(:default_err, :stderr, 1, false)
+            Easy_CLI::Channel.new(:default_err, :stderr, 1, false),
+            Easy_CLI::Channel.new(:default_warn, :stderr, 5, false)
         ]
         getter file = "#{File.basename(PROGRAM_NAME)}.log"
 

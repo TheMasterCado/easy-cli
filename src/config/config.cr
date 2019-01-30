@@ -6,7 +6,7 @@ module Easy_CLI
 
         getter settings = [] of Setting
         getter file = ""
-        getter configuration = {} of String => Nil | Int32 | String | Array(String)
+        getter configuration : YAML::Any
 
         abstract def initialize
         
@@ -35,17 +35,27 @@ module Easy_CLI
             end
         end
 
-        def load_file
+        def load
             if File.exists?(@file)
-                YAML.parse(File.read(@file))
+                @configuration = YAML.parse(File.read(@file))
             end
         end
 
-        def validate
+        def get(full_name)
+            if !self.has_setting?
+                raise SettingNotFound.new("No setting named '#{full_name}' has been defined.")
+            end
 
+            return self.get_setting(full_name).find_in(@configuration)
         end
 
         class SettingNameNotUnique < Exception
+        end
+
+        class SettingNotFound < Exception
+        end
+
+        class ConfigurationNotLoaded < Exception
         end
 
     end

@@ -10,11 +10,10 @@ end
 
 class MyConfig < Easy_CLI::Config
   def initialize
-    #@values["test"] = "ok"
+    setting "patate", :integer
   end
 end
 
-MyConfig.new
 
 class PDU < Easy_CLI::CLI
   def initialize
