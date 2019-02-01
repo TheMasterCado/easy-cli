@@ -4,15 +4,14 @@ require "../logger"
 
 module Easy_CLI
   abstract class CLI < Command
-
     getter call_name = File.basename(PROGRAM_NAME)
     getter logger = Logger.new
     getter version = "Not available"
 
     @std_options = {
-      :yes => false,
-      :verb => false,
-      :version => false
+      :yes     => false,
+      :verb    => false,
+      :version => false,
     }
 
     abstract def initialize
@@ -23,6 +22,10 @@ module Easy_CLI
 
     def logger(l)
       @logger = l
+    end
+
+    def version(v)
+      @version = v
     end
 
     def yes_option
@@ -47,6 +50,5 @@ module Easy_CLI
       Parser.ask_for_required_options(command, options)
       command.call(options)
     end
-
   end
 end

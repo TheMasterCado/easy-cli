@@ -115,7 +115,7 @@ module Easy_CLI
       message += "\n\nOptions:" if with_options
       message
     end
-    
+
     def option(name, type, short_flag, long_flag, desc = "", default = nil, required = false, prompt = "")
       if self.has_option_or_argument?(name)
         raise OptionNameNotUnique.new("An Option or Argument named '#{name}' is already defined.")
@@ -142,8 +142,10 @@ module Easy_CLI
 
     class CommandRegisteredTwice < Exception
     end
+
     class CommandNameNotUnique < Exception
     end
+
     class OptionNameNotUnique < Exception
     end
   end

@@ -52,7 +52,7 @@ module Easy_CLI
               parser.on("#{opt.short_flag}", "#{opt.long_flag}", opt.desc) { parsed_args[opt.name] = true }
             else
               parser.on("#{opt.long_flag}", opt.desc) { parsed_args[opt.name] = true }
-            end              
+            end
           when :string
             if opt.short_flag
               parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) { |val| parsed_args[opt.name] = val }
@@ -116,7 +116,7 @@ module Easy_CLI
           exit(0)
         end
         if std_opts[:version]
-          parser.on("-v", "--version", "Show version") do 
+          parser.on("-v", "--version", "Show version") do
             puts command.cli.version
             exit(0)
           end

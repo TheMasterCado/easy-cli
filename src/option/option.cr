@@ -6,7 +6,7 @@ module Easy_CLI
     getter type : Symbol
     getter short_flag : String | Nil
     getter long_flag : String
-    getter default : Nil | Int32 | Float64 |String | Array(String)
+    getter default : Nil | Int32 | Float64 | String | Array(String)
     getter required : Bool
     getter desc : String
     getter prompt : String
