@@ -6,6 +6,26 @@ Features:
 - Define options and arguments.
 - Define channels for your output with set verbosity level and if it should write to a file.
 
+**This is a project under development.**
+
+## Documentation
+
+[Simple use case](https://github.com/TheMasterCado/easy-cli#usage)
+
+The full documentation isn't available yet.
+
+## Contact
+
+For issues/bugs you can:
+- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
+
+For feature requests you can:
+- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
+- tweet to me: https://twitter.com/themastercado
+
+For anything else:
+-  tweet to me: https://twitter.com/themastercado
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
@@ -93,25 +113,16 @@ cli.run(ARGV)
 
 ```shell
 $ mycli com alexis
-```
-Output:
-```shell
 Good morning alexis
 ```
 
 ```shell
 $ mycli com alexis --night
-```
-Output:
-```shell
 Good night alexis
 ```
 
 ```shell
 $ mycli com
-```
-Output:
-```shell
 ERROR: Invalid number of arguments for 'mycli com' (given 0, expected 1).
 Usage: mycli com NAME [options]
 
@@ -125,9 +136,6 @@ Options:
 
 ```shell
 $ mycli
-```
-Output:
-```shell
 Usage: mycli COMMAND
 
 Commands:
@@ -135,10 +143,6 @@ Commands:
 ```
 
 \**If you haven't compiled your program yet, use* `crystal run <path to your main .cr> -- <arguments>`
-
-## Development
-
-Create a branch and do your stuff.
 
 ## Contributing
 
