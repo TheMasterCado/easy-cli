@@ -93,25 +93,16 @@ cli.run(ARGV)
 
 ```shell
 $ mycli com alexis
-```
-Output:
-```shell
 Good morning alexis
 ```
 
 ```shell
 $ mycli com alexis --night
-```
-Output:
-```shell
 Good night alexis
 ```
 
 ```shell
 $ mycli com
-```
-Output:
-```shell
 ERROR: Invalid number of arguments for 'mycli com' (given 0, expected 1).
 Usage: mycli com NAME [options]
 
@@ -125,9 +116,6 @@ Options:
 
 ```shell
 $ mycli
-```
-Output:
-```shell
 Usage: mycli COMMAND
 
 Commands:
@@ -135,10 +123,6 @@ Commands:
 ```
 
 \**If you haven't compiled your program yet, use* `crystal run <path to your main .cr> -- <arguments>`
-
-## Development
-
-Create a branch and do your stuff.
 
 ## Contributing
 
