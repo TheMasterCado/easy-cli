@@ -1,58 +1,39 @@
 require "./cli"
 require "./command"
 require "./option"
-require "./config"
 require "./logger"
 
 module Easy_CLI
   VERSION = "0.1.0"
 end
 
-class MyConfig < Easy_CLI::Config
-  def initialize
-    setting "patate", :integer
-  end
-end
-
-
 class PDU < Easy_CLI::CLI
   def initialize
-    name "pdu"
+    name "mycli"
 
-    option "yes", :boolean, "-y", "--yes", desc: "always yes"
   end
 end
 
 class Com < Easy_CLI::Command
   def initialize
-    name("com")
-    desc "do stuff"
+    name "com"
+    desc "My first command with Easy CLI"
 
-    option "test", :string, "-t", "--test", desc: "allo"
+    argument "name"
+    option "night", :boolean, nil, "--night", "Say good night instead of good morning"
   end
 
-  def call(args)
-    puts "COMCOMCOM => #{args["test"]}"
-  end
-end
-
-class Com2 < Easy_CLI::Command
-  def initialize
-    name("com2")
-    desc "do stuff2"
-
-    argument "patente"
-  end
-
-  def call(args)
-    puts "COM2COM2COM2 => #{args["patente"]}"
+  def call(data)
+    if data["night"]
+      puts "Good night #{data["name"]}"
+    else
+      puts "Good morning #{data["name"]}"
+    end
   end
 end
 
 pdu = PDU.new
 
-pdu.register(Com.new) do |com|
-  com.register(Com2.new)
-end
+pdu.register(Com.new)
 
 pdu.run(ARGV)

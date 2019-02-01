@@ -6,8 +6,7 @@ module Easy_CLI
         getter verbosity = 5
         getter channels = [
             Easy_CLI::Channel.new(:default_out, :stdout, 3, false),
-            Easy_CLI::Channel.new(:default_err, :stderr, 1, false),
-            Easy_CLI::Channel.new(:default_warn, :stderr, 5, false)
+            Easy_CLI::Channel.new(:default_err, :stderr, 1, false)
         ]
         getter file = "#{File.basename(PROGRAM_NAME)}.log"
 

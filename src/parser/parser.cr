@@ -1,4 +1,5 @@
 require "option_parser"
+require "../command_helpers"
 require "../command"
 require "../option"
 
@@ -31,10 +32,10 @@ module Easy_CLI
       cur_command
     end
 
-    def parse_options(args, command, show_yes_opt, show_verb_opt)
+    def parse_options(args, command, std_opts)
       parsed_args = command.options_defaults
       command_arguments = command.all_arguments
-      cur_options = [] of String
+      cur_options = args
       command.call_name
       args.each_with_index do |arg, idx|
         if arg == command.call_name
@@ -47,43 +48,85 @@ module Easy_CLI
         command.all_options.each do |opt|
           case opt.type
           when :boolean
-            parser.on("#{opt.short_flag}", "#{opt.long_flag}", opt.desc) { parsed_args[opt.name] = true }
+            if opt.short_flag
+              parser.on("#{opt.short_flag}", "#{opt.long_flag}", opt.desc) { parsed_args[opt.name] = true }
+            else
+              parser.on("#{opt.long_flag}", opt.desc) { parsed_args[opt.name] = true }
+            end              
           when :string
-            parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) { |val| parsed_args[opt.name] = val }
+            if opt.short_flag
+              parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) { |val| parsed_args[opt.name] = val }
+            else
+              parser.on("#{opt.long_flag}=#{opt.name.upcase}", opt.desc) { |val| parsed_args[opt.name] = val }
+            end
           when :integer
-            parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
-              begin
-                parsed_args[opt.name] = val.to_i
-              rescue ArgumentError
-                STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid integer."
-                puts parser
-                exit(1)
+            if opt.short_flag
+              parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
+                begin
+                  parsed_args[opt.name] = val.to_i
+                rescue ArgumentError
+                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid integer."
+                  puts parser
+                  exit(1)
+                end
+              end
+            else
+              parser.on("#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
+                begin
+                  parsed_args[opt.name] = val.to_i
+                rescue ArgumentError
+                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid integer."
+                  puts parser
+                  exit(1)
+                end
               end
             end
           when :float
-            parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
-              begin
-                parsed_args[opt.name] = val.to_f
-              rescue ArgumentError
-                STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid float."
-                puts parser
-                exit(1)
+            if opt.short_flag
+              parser.on("#{opt.short_flag} #{opt.name.upcase}", "#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
+                begin
+                  parsed_args[opt.name] = val.to_f
+                rescue ArgumentError
+                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid float."
+                  puts parser
+                  exit(1)
+                end
+              end
+            else
+              parser.on("#{opt.long_flag}=#{opt.name.upcase}", opt.desc) do |val|
+                begin
+                  parsed_args[opt.name] = val.to_f
+                rescue ArgumentError
+                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid float."
+                  puts parser
+                  exit(1)
+                end
               end
             end
           when :array
-            parser.on("#{opt.short_flag} #{opt.name.upcase},...", "#{opt.long_flag}=#{opt.name.upcase},...", opt.desc) { |items| parsed_args[opt.name] = items.split(',') }
+            if opt.short_flag
+              parser.on("#{opt.short_flag} #{opt.name.upcase},...", "#{opt.long_flag}=#{opt.name.upcase},...", opt.desc) { |items| parsed_args[opt.name] = items.split(',') }
+            else
+              parser.on("#{opt.long_flag}=#{opt.name.upcase},...", opt.desc) { |items| parsed_args[opt.name] = items.split(',') }
+            end
           end
         end
         parser.on("-h", "--help", "Show this help") do
           puts parser
           exit(0)
         end
-        if show_yes_opt
-          parser.on("-y", "--yes", "Show this help") { parsed_args["yes"] }
+        if std_opts[:version]
+          parser.on("-v", "--version", "Show version") do 
+            puts command.cli.version
+            exit(0)
+          end
         end
-        if show_verb_opt
-          parser.on("-v 0-9", "--verb=0-9", "Show this help") do |val|
-            val_i
+        if std_opts[:yes]
+          parser.on("-y", "--yes", "Do not ask for confirmation and assume yes") { parsed_args["yes"] }
+        end
+        if std_opts[:verb]
+          parser.on("--verb=0-9", "Set verbosity for execution") do |val|
+            val_i = -1
             begin
               val_i = val.to_i
             rescue ArgumentError
@@ -91,7 +134,7 @@ module Easy_CLI
               puts parser
               exit(1)
             end
-            if !(0..9).includes?(val)
+            if !(0..9).includes?(val_i)
               STDERR.puts "ERROR: Value for '--verb' is not between 0 and 9."
               puts parser
               exit(1)
@@ -100,6 +143,13 @@ module Easy_CLI
         end
         parser.unknown_args do |arguments|
           if arguments.size != command_arguments.size
+            arguments.each do |arg|
+              if arg.starts_with?('-')
+                STDERR.puts "ERROR: '#{arg}' is not a valid option."
+                puts parser
+                exit(1)
+              end
+            end
             STDERR.puts "ERROR: Invalid number of arguments for '#{command.absolute_call_name}' (given #{arguments.size}, expected #{command_arguments.size})."
             puts parser
             exit(1)
@@ -121,6 +171,14 @@ module Easy_CLI
       end
       option_parser.parse(cur_options)
       parsed_args
+    end
+
+    def ask_for_required_options(command, options)
+      command.all_options.each do |opt|
+        if opt.required && options[opt.name].nil?
+          options[opt.name] = CommandHelpers.prompt(opt.prompt)
+        end
+      end
     end
   end
 end

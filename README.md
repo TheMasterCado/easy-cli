@@ -1,6 +1,10 @@
 # easy-cli
 
-Easy CLI is a small shard that provides a structure for your CLI utilities with an option parser and some helpers.
+Easy CLI is a small shard that provides a structure for your CLI utilities.  
+Features:
+- Define commands and infinite levels of subcommands.
+- Define options and arguments.
+- Define channels for your output with set verbosity level and if it should write to a file.
 
 ## Installation
 
@@ -14,9 +18,123 @@ dependencies:
 
 ## Usage
 
+#### Require the gem
+
 ```crystal
 require "easy-cli"
+
+...
 ```
+
+#### Create a CLI
+
+Create a CLI named `mycli`:
+```crystal
+...
+
+class MyCLI < Easy_CLI::CLI
+  def initialize
+    name "mycli"
+  end
+end
+
+...
+```
+
+#### Create a Command
+
+Create a command named `com` with an argument `name` and an option `night`:
+```crystal
+...
+
+class Com < Easy_CLI::Command
+  def initialize
+    name "com"
+    desc "My first command with Easy CLI"
+
+    argument "name"
+    option "night", :boolean, nil, "--night", "Say good night instead of good morning"
+  end
+
+  def call(data)
+    if data["night"]
+      puts "Good night #{data["name"]}"
+    else
+      puts "Good morning #{data["name"]}"
+    end
+  end
+end
+
+...
+```
+
+#### Register a Command
+
+Register an instance of the `Com` class to an instance of the `MyCLI` class:
+```crystal
+...
+
+cli = MyCLI.new
+cli.register Com.new
+
+...
+```
+
+#### Call a CLI
+
+Call the `run` method with the passed arguments on the `MyCLI` instance:
+```crystal
+...
+
+cli.run(ARGV)
+```
+
+**Examples**
+
+```shell
+$ mycli com alexis
+```
+Output:
+```shell
+Good morning alexis
+```
+
+```shell
+$ mycli com alexis --night
+```
+Output:
+```shell
+Good night alexis
+```
+
+```shell
+$ mycli com
+```
+Output:
+```shell
+ERROR: Invalid number of arguments for 'mycli com' (given 0, expected 1).
+Usage: mycli com NAME [options]
+
+Description:
+    My first command with Easy CLI
+
+Options:
+    --night                          Say good night instead of good morning
+    -h, --help                       Show this help
+```
+
+```shell
+$ mycli
+```
+Output:
+```shell
+Usage: mycli COMMAND
+
+Commands:
+    com                              My first command with Easy CLI
+```
+
+\**If you haven't compiled your program yet, use* `crystal run <path to your main .cr> -- <arguments>`
 
 ## Development
 

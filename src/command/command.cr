@@ -11,10 +11,10 @@ module Easy_CLI
 
     abstract def initialize
 
-    abstract def call(args)
+    abstract def call(data)
 
     def options_defaults
-      defaults = {} of String => String | Bool | Int32 | Array(String) | Nil
+      defaults = {} of String => String | Bool | Int32 | Float64 | Array(String) | Nil
       all_options.map { |option| defaults[option.name] = option.default }
       defaults
     end
@@ -34,6 +34,14 @@ module Easy_CLI
         @arguments + parent.all_arguments.select { |a| !@arguments.includes?(a) }
       else
         @arguments
+      end
+    end
+
+    def cli
+      if p = @parent
+        p.cli
+      else
+        self.as(CLI)
       end
     end
 
@@ -79,14 +87,14 @@ module Easy_CLI
     end
 
     def has_option_or_argument?(name)
-      return @options.map { |opt| opt.name }.includes?(name) || @arguments.includes?(name)
+      @options.map { |opt| opt.name }.includes?(name) || @arguments.includes?(name)
     end
 
     def get_command(command_name)
       @commands.each do |com|
         return com if com.call_name == command_name
       end
-      return @commands.first
+      @commands.first
     end
 
     def usage(with_options = false)
@@ -107,12 +115,12 @@ module Easy_CLI
       message += "\n\nOptions:" if with_options
       message
     end
-
-    def option(name, type, short_flag, long_flag, default = nil, required = false, desc = "")
+    
+    def option(name, type, short_flag, long_flag, desc = "", default = nil, required = false, prompt = "")
       if self.has_option_or_argument?(name)
         raise OptionNameNotUnique.new("An Option or Argument named '#{name}' is already defined.")
       else
-        @options << Option.new(name, type, short_flag, long_flag, default, required, desc)
+        @options << Option.new(name, type, short_flag, long_flag, desc, default, required, prompt)
       end
     end
 
