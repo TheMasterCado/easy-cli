@@ -10,12 +10,6 @@ Features:
 
 **This is a project under development.**
 
-## Documentation
-
-[Simple use case](https://github.com/TheMasterCado/easy-cli#usage)
-
-The full documentation isn't available yet.
-
 ## Contact
 
 For issues/bugs you can:
@@ -27,6 +21,12 @@ For feature requests you can:
 
 For anything else:
 -  tweet to me: https://twitter.com/themastercado
+
+## Documentation
+
+[Simple use case](https://github.com/TheMasterCado/easy-cli#usage)
+
+The full documentation isn't available yet.
 
 ## Installation
 
