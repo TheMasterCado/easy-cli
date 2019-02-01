@@ -1,5 +1,7 @@
 # easy-cli
 
+Current version: **0.9**
+
 Easy CLI is a small shard that provides a structure for your CLI utilities.  
 Features:
 - Define commands and infinite levels of subcommands.
