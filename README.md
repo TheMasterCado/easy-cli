@@ -6,6 +6,26 @@ Features:
 - Define options and arguments.
 - Define channels for your output with set verbosity level and if it should write to a file.
 
+**This is a project under development.**
+
+## Documentation
+
+[Simple use case](https://github.com/TheMasterCado/easy-cli#usage)
+
+The full documentation isn't available yet.
+
+## Contact
+
+For issues/bugs you can:
+- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
+
+For feature requests you can:
+- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
+- tweet to me: https://twitter.com/themastercado
+
+For anything else:
+-  tweet to me: https://twitter.com/themastercado
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
