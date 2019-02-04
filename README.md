@@ -1,6 +1,8 @@
 # Easy CLI
 
-Easy CLI is a small shard that provides a structure for your CLI utilities. You can:
+Easy CLI is a small shard that provides a structure for your CLI utilities.
+
+Features:
 - Define commands and infinite levels of subcommands.
 - Define options and arguments.
 - Define channels for your output with a verbosity level and if it should write to a file.
