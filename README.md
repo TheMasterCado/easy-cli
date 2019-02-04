@@ -1,14 +1,14 @@
-# easy-cli
+# Easy CLI
 
-Current version: **0.9**
-
-Easy CLI is a small shard that provides a structure for your CLI utilities.  
-Features:
+Easy CLI is a small shard that provides a structure for your CLI utilities. You can:
 - Define commands and infinite levels of subcommands.
 - Define options and arguments.
-- Define channels for your output with set verbosity level and if it should write to a file.
+- Define channels for your output with a verbosity level and if it should write to a file.
 
-**This is a project under development.**
+**This project is under development.**
+
+[![GitHub release](https://img.shields.io/github/release/TheMasterCado/easy-cli.svg)](https://github.com/TheMasterCado/easy-cli/releases)
+[![Build Status](https://travis-ci.org/TheMasterCado/easy-cli.svg?branch=master)](https://travis-ci.org/TheMasterCado/easy-cli)
 
 ## Contact
 
@@ -40,7 +40,7 @@ dependencies:
 
 ## Usage
 
-#### Require the gem
+#### Require the shard
 
 ```crystal
 require "easy-cli"
@@ -154,6 +154,6 @@ Commands:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-## Contributors
+## Author
 
 - [TheMasterCado](https://github.com/TheMasterCado) - creator and maintainer
