@@ -1,6 +1,6 @@
 name: easy-cli
 version: 0.9.0
-description: Easy to use CLI builder with integrated logging capabilities, infinite subcommands levels, options and arguments.
+description: Easy to use CLI builder with integrated logging capabilities, infinite levels of subcommands, options and arguments.
 authors:
   - TheMasterCado
 
