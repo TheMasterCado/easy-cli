@@ -14,15 +14,9 @@ Features:
 
 ## Contact
 
-For issues/bugs you can:
-- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
-
-For feature requests you can:
-- submit an issue on GitHub: https://github.com/TheMasterCado/easy-cli/issues/new
-- tweet me: https://twitter.com/themastercado
-
-For anything else:
-- tweet me: https://twitter.com/themastercado
+For issues/bugs, feature requests or anything else you can:
+ - [Submit an issue](https://github.com/TheMasterCado/easy-cli/issues/new)
+ - [Tweet me](https://twitter.com/themastercado)
 
 ## Documentation
 
