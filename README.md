@@ -116,13 +116,13 @@ cli.run(ARGV)
 **Examples**
 
 ```shell
-$ mycli com alexis
-Good morning alexis
+$ mycli com bob
+Good morning bob
 ```
 
 ```shell
-$ mycli com alexis --night
-Good night alexis
+$ mycli com bob --night
+Good night bob
 ```
 
 ```shell
