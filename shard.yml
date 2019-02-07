@@ -1,9 +1,9 @@
 name: easy-cli
-version: 0.9.0
+version: 0.9.1
 description: Easy to use CLI builder with integrated logging capabilities, infinite levels of subcommands, options and arguments.
 authors:
   - TheMasterCado
 
-crystal: 0.27.1
+crystal: 0.27.2
 
 license: MIT

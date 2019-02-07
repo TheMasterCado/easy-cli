@@ -48,6 +48,7 @@ module Easy_CLI
         exit(1)
       end
       Parser.ask_for_required_options(command, options)
+      @logger.verbosity(options["verb"]) if options["verb"]
       command.call(options)
     end
   end

@@ -4,5 +4,5 @@ require "./option"
 require "./logger"
 
 module Easy_CLI
-  VERSION = "0.9"
+  VERSION = "0.9.1"
 end

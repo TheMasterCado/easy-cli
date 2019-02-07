@@ -122,7 +122,7 @@ module Easy_CLI
           end
         end
         if std_opts[:yes]
-          parser.on("-y", "--yes", "Do not ask for confirmation and assume yes") { parsed_args["yes"] }
+          parser.on("-y", "--yes", "Do not ask for confirmation and assume yes") { parsed_args["yes"] = true }
         end
         if std_opts[:verb]
           parser.on("--verb=0-9", "Set verbosity for execution") do |val|
@@ -139,6 +139,7 @@ module Easy_CLI
               puts parser
               exit(1)
             end
+            parsed_args["verb"] = val_i
           end
         end
         parser.unknown_args do |arguments|
