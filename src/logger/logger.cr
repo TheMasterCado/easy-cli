@@ -32,6 +32,7 @@ module Easy_CLI
       @channels.each do |ch|
         return true if ch.name == chan
       end
+      return false
     end
 
     def get_channel(chan)
