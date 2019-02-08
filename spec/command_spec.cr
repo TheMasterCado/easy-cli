@@ -1,7 +1,6 @@
 require "./spec_helper"
 
 describe Easy_CLI do
-  # TODO: Write tests
   describe Easy_CLI::CLI do
 
     it "subclass can be instantiated" do
@@ -43,7 +42,6 @@ describe Easy_CLI do
   end
 
   describe Easy_CLI::Command do
-
     it "subclass can be instantiated" do
       command = TestCommand.new
     end
@@ -52,6 +50,16 @@ describe Easy_CLI do
       expect_raises(Easy_CLI::Command::OptionNameNotUnique) do
         command = TestCommandSameOptionName.new
       end
+    end
+
+    it "correctly get the cli it is associated with" do
+      cli = TestCLI.new
+      command = TestCommand.new
+      cli.register(command)
+      cli.should be(command.cli)
+      cli.responds_to?(:version).should be_true
+      cli.responds_to?(:logger).should be_true
+      cli.cli.should be(cli)
     end
   end
 end

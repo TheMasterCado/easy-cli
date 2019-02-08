@@ -40,6 +40,10 @@ module Easy_CLI
       @std_options[:version] = true
     end
 
+    def cli
+      self
+    end
+
     def run(args)
       command = Parser.parse_command(args, self)
       options = Parser.parse_options(args, command, @std_options)
