@@ -9,7 +9,7 @@ Features:
 
 **This project is under development.**
 
-[![GitHub release](https://img.shields.io/github/release/TheMasterCado/easy-cli.svg)](https://github.com/TheMasterCado/easy-cli/releases)
+[![GitHub release](https://img.shields.io/github/release/TheMasterCado/easy-cli.svg)](https://github.com/TheMasterCado/easy-cli/releases/latest)
 [![Build Status](https://travis-ci.org/TheMasterCado/easy-cli.svg?branch=master)](https://travis-ci.org/TheMasterCado/easy-cli)
 
 ## Contact
