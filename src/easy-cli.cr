@@ -1,8 +1,6 @@
 require "./cli"
-require "./command"
-require "./option"
-require "./logger"
+require "./command_helpers"
 
 module Easy_CLI
-  VERSION = "0.9.1"
+  VERSION = "0.9.2"
 end

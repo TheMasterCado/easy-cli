@@ -4,7 +4,7 @@ module Easy_CLI
   abstract class Command
     getter call_name = ""
     getter description = ""
-    getter parent : Command | Nil = nil
+    getter parent : Command | CLI | Nil = nil
     getter commands = [] of Command
     getter options = [] of Option
     getter arguments = [] of String
@@ -39,9 +39,13 @@ module Easy_CLI
 
     def cli
       if p = @parent
-        p.cli
+        if !p.parent.nil?
+          p.cli
+        else
+          @parent.as(CLI)
+        end
       else
-        self.as(CLI)
+        raise CommandIsACLI.new("This command is a CLI")
       end
     end
 
@@ -147,6 +151,9 @@ module Easy_CLI
     end
 
     class OptionNameNotUnique < Exception
+    end
+
+    class CommandIsACLI < Exception
     end
   end
 end
