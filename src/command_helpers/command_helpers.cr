@@ -11,6 +11,7 @@ module Easy_CLI
       while input.nil?
         input = Readline.readline(pr)
         input = nil if !input.nil? && input.strip.empty?
+        STDOUT.puts "\n" if input.nil?
       end
       input.strip
     end
