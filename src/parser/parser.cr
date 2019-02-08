@@ -121,6 +121,7 @@ module Easy_CLI
             exit(0)
           end
         end
+        parsed_args["yes"] = false
         if std_opts[:yes]
           parser.on("-y", "--yes", "Do not ask for confirmation and assume yes") { parsed_args["yes"] = true }
         end

@@ -7,6 +7,17 @@ class TestCLI < Easy_CLI::CLI
     end
 end
 
+class TestAdvancedCLI < Easy_CLI::CLI
+    def initialize
+        name "test"
+        version "999"
+
+        yes_option
+        verb_option
+        version_option
+    end
+end
+
 class TestCommand <Easy_CLI::Command
     def initialize
         name "command"
