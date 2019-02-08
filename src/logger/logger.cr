@@ -21,41 +21,43 @@ module Easy_CLI
     end
 
     def channel(name, output, verb, log_to_file)
-      if self.has_channel?(channel)
-        raise ChannelNameNotUnique.new("A Channel named '#{channel}' is already defined.")
+      if self.has_channel?(name)
+        raise ChannelNameNotUnique.new("A Channel named '#{name}' is already defined.")
       else
         @channels << Easy_CLI::Channel.new(name, output, verb, log_to_file)
       end
     end
 
-    def has_channel?(channel)
+    def has_channel?(chan)
       @channels.each do |ch|
-        return true if ch.name == channel
+        return true if ch.name == chan
       end
     end
 
-    def get_channel(channel)
+    def get_channel(chan)
       @channels.each do |ch|
-        return ch if ch.name == channel
+        return ch if ch.name == chan
       end
       return @channels.first
     end
 
-    def p(channel, message)
-      puts(channel, message)
+    def p(chan, message)
+      puts(chan, message)
     end
 
-    def puts(channel, message)
-      if !self.has_channel?(channel)
-        raise ChannelNotDefined.new("Channel '#{channel}' is not defined for this Logger.")
+    def puts(chan, message)
+      if !self.has_channel?(chan)
+        raise ChannelNotDefined.new("Channel '#{chan}' is not defined for this Logger.")
       else
-        ch = self.get_channel(channel)
+        ch = self.get_channel(chan)
         ch.puts(message) if @verbosity >= ch.verbosity
         File.write(@file, "#{message}\n", mode: "a") if ch.log_to_file
       end
     end
 
     class ChannelNotDefined < Exception
+    end
+    class ChannelNameNotUnique < Exception
     end
   end
 end

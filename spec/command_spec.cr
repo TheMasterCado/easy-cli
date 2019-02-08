@@ -2,7 +2,6 @@ require "./spec_helper"
 
 describe Easy_CLI do
   describe Easy_CLI::CLI do
-
     it "subclass can be instantiated" do
       cli = TestCLI.new
       cliadv = TestAdvancedCLI.new
@@ -51,7 +50,6 @@ describe Easy_CLI do
       cliadv.register(TestCommand.new)
       cliadv.run(["command"])
     end
-
   end
 
   describe Easy_CLI::Command do
@@ -74,7 +72,5 @@ describe Easy_CLI do
       cli.responds_to?(:logger).should be_true
       cli.cli.should be(cli)
     end
-
-
   end
 end
