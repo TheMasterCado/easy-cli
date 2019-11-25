@@ -1,3 +1,4 @@
+require "../cli"
 require "../option"
 
 module Easy_CLI

@@ -1,4 +1,5 @@
 require "option_parser"
+require "colorize"
 require "../command_helpers"
 require "../command"
 require "../option"
@@ -21,9 +22,9 @@ module Easy_CLI
           break
         else
           if idx == 0
-            STDERR.puts "ERROR: '#{arg}' is not a valid command.\n"
+            STDERR.puts "#{"ERROR:".colorize(:red)} '#{arg}' is not a valid command.\n"
           else
-            STDERR.puts "ERROR: '#{arg}' is not a valid subcommand for '#{cur_command.absolute_call_name}'.\n"
+            STDERR.puts "#{"ERROR:".colorize(:red)} '#{arg}' is not a valid subcommand for '#{cur_command.absolute_call_name}'.\n"
           end
           puts cur_command.usage
           exit(1)
@@ -65,7 +66,7 @@ module Easy_CLI
                 begin
                   parsed_args[opt.name] = val.to_i
                 rescue ArgumentError
-                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid integer."
+                  STDERR.puts "#{"ERROR:".colorize(:red)} Value for '#{opt.long_flag}' is not a valid integer."
                   puts parser
                   exit(1)
                 end
@@ -75,7 +76,7 @@ module Easy_CLI
                 begin
                   parsed_args[opt.name] = val.to_i
                 rescue ArgumentError
-                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid integer."
+                  STDERR.puts "#{"ERROR:".colorize(:red)} Value for '#{opt.long_flag}' is not a valid integer."
                   puts parser
                   exit(1)
                 end
@@ -87,7 +88,7 @@ module Easy_CLI
                 begin
                   parsed_args[opt.name] = val.to_f
                 rescue ArgumentError
-                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid float."
+                  STDERR.puts "#{"ERROR:".colorize(:red)} Value for '#{opt.long_flag}' is not a valid float."
                   puts parser
                   exit(1)
                 end
@@ -97,7 +98,7 @@ module Easy_CLI
                 begin
                   parsed_args[opt.name] = val.to_f
                 rescue ArgumentError
-                  STDERR.puts "ERROR: Value for '#{opt.long_flag}' is not a valid float."
+                  STDERR.puts "#{"ERROR:".colorize(:red)} Value for '#{opt.long_flag}' is not a valid float."
                   puts parser
                   exit(1)
                 end
@@ -121,6 +122,7 @@ module Easy_CLI
             exit(0)
           end
         end
+        parsed_args["yes"] = false
         if std_opts[:yes]
           parser.on("-y", "--yes", "Do not ask for confirmation and assume yes") { parsed_args["yes"] = true }
         end
@@ -130,12 +132,12 @@ module Easy_CLI
             begin
               val_i = val.to_i
             rescue ArgumentError
-              STDERR.puts "ERROR: Value for '--verb' is not a valid integer."
+              STDERR.puts "#{"ERROR:".colorize(:red)} Value for '--verb' is not a valid integer."
               puts parser
               exit(1)
             end
             if !(0..9).includes?(val_i)
-              STDERR.puts "ERROR: Value for '--verb' is not between 0 and 9."
+              STDERR.puts "#{"ERROR:".colorize(:red)} Value for '--verb' is not between 0 and 9."
               puts parser
               exit(1)
             end
@@ -146,12 +148,12 @@ module Easy_CLI
           if arguments.size != command_arguments.size
             arguments.each do |arg|
               if arg.starts_with?('-')
-                STDERR.puts "ERROR: '#{arg}' is not a valid option."
+                STDERR.puts "#{"ERROR:".colorize(:red)} '#{arg}' is not a valid option."
                 puts parser
                 exit(1)
               end
             end
-            STDERR.puts "ERROR: Invalid number of arguments for '#{command.absolute_call_name}' (given #{arguments.size}, expected #{command_arguments.size})."
+            STDERR.puts "#{"ERROR:".colorize(:red)} Invalid number of arguments for '#{command.absolute_call_name}' (given #{arguments.size}, expected #{command_arguments.size})."
             puts parser
             exit(1)
           end
@@ -160,12 +162,12 @@ module Easy_CLI
           end
         end
         parser.invalid_option do |flag|
-          STDERR.puts "ERROR: '#{flag}' is not a valid option."
+          STDERR.puts "#{"ERROR:".colorize(:red)} '#{flag}' is not a valid option."
           puts parser
           exit(1)
         end
         parser.missing_option do |flag|
-          STDERR.puts "ERROR: No value provided for '#{flag}'."
+          STDERR.puts "#{"ERROR:".colorize(:red)} No value provided for '#{flag}'."
           puts parser
           exit(1)
         end
@@ -177,7 +179,7 @@ module Easy_CLI
     def ask_for_required_options(command, options)
       command.all_options.each do |opt|
         if opt.required && options[opt.name].nil?
-          options[opt.name] = CommandHelpers.prompt(opt.prompt)
+          options[opt.name] = CommandHelpers.prompt("#{opt.prompt}:")
         end
       end
     end
