@@ -14,7 +14,7 @@ module Easy_CLI
     def initialize(@name, @type, @short_flag, @long_flag, @desc, @default, @required, @prompt)
       raise InvalidOptionType.new("'#{@type}' is not a valid type for an option.") if !TYPES.includes?(@type)
       @default = nil if @required
-      @prompt = "#{@name}:" if @prompt.blank?
+      @prompt = "#{@desc || @name}:" if @prompt.blank?
     end
 
     class InvalidOptionType < Exception
