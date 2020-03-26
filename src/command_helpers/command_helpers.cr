@@ -1,5 +1,3 @@
-require "readline"
-
 module Easy_CLI
   module CommandHelpers
     extend self
@@ -9,7 +7,8 @@ module Easy_CLI
       pr = question + " "
       pr += "\n" if new_line
       while input.nil?
-        input = Readline.readline(pr)
+        print pr
+        input = STDIN.gets
         input = nil if !input.nil? && input.strip.empty?
         STDOUT.puts "\n" if input.nil?
       end

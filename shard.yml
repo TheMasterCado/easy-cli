@@ -1,12 +1,8 @@
 name: easy-cli
-version: 0.10.0
+version: 0.10.1
 description: Easy to use CLI builder with integrated logging capabilities, infinite levels of subcommands, options and arguments.
 authors:
   - TheMasterCado
-
-dependencies:
-  readline:
-    github: crystal-lang/crystal-readline
 
 crystal: 0.33.0
 
